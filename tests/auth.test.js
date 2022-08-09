@@ -31,4 +31,14 @@ describe('/api/v1/auth', () => {
     const { statusCode } = await agent.get('/api/v1/auth/verify');
     expect(statusCode).toBe(200);
   });
+
+  it('/logout', async () => {
+    const { agent } = await signUpUser();
+
+    const { body } = await agent.delete('/api/v1/auth/logout');
+    expect(body).toEqual({ success: true });
+
+    const { statusCode } = await agent.get('/api/v1/auth/verify');
+    expect(statusCode).toBe(401);
+  });
 });
