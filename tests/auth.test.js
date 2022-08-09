@@ -2,7 +2,7 @@ const { setupDb, signUpUser } = require('./utils');
 const request = require('supertest');
 const app = require('../lib/app');
 
-describe.skip('/api/v1/auth', () => {
+describe('/api/v1/auth', () => {
   beforeEach(setupDb);
 
   it('/signup', async () => {
