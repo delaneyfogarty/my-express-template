@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS fruits;
-DROP TABLE IF EXISTS my_users;
+DROP TABLE IF EXISTS gemstones CASCADE;
+DROP TABLE IF EXISTS my_users CASCADE;
 
 
 CREATE TABLE my_users (
@@ -8,12 +8,12 @@ CREATE TABLE my_users (
 	password_hash VARCHAR NOT NULL
 );
 
-CREATE TABLE fruits (
+CREATE TABLE gemstones (
 	id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	user_id BIGINT,
 	description VARCHAR NOT NULL,
-	is_delicious BOOLEAN NOT NULL DEFAULT(false),
+	is_beautiful BOOLEAN NOT NULL DEFAULT(true),
 	qty INT,
 	created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  FOREIGN KEY (user_id) REFERENCES users(id)
+  FOREIGN KEY (user_id) REFERENCES my_users(id)
 );

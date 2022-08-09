@@ -36,12 +36,4 @@ const routes = {
       res.end('users POST');
     },
   },
-  pets: {
-    GET(req, res) {
-      res.end('pets GET');
-    },
-    POST(req, res) {
-      res.end('pets POST');
-    },
-  },
 };

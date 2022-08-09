@@ -10,10 +10,10 @@
     "test:watch": "npm run test -- --watch",
     "start": "node -r dotenv/config server.js",
     "start:watch": "nodemon -i ./tests -r dotenv/config server.js",
-    "create-db": "createdb -U postgres shopping",
-    "create-db:test": "createdb -U postgres shopping-test",
+    "create-db": "createdb -U postgres gems",
+    "create-db:test": "createdb -U postgres gems-test",
     "setup-db": "psql -f ./setup.sql",
-    "setup-db:local": "psql -d shopping -f ./setup.sql",
+    "setup-db:local": "psql -d gems -f ./setup.sql",
     "setup-heroku": "heroku run npm run setup-db"
   },
   "jest": {
