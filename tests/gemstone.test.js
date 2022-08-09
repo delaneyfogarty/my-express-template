@@ -7,7 +7,6 @@ describe('/api/v1/gemstones', () => {
 
   it('POST / creates a new gemstone with the current user', async () => {
     const { agent, user } = await signUpUser();
-    console.log('user.body', user);
 
     const newGem = { description: 'Amethyst', qty: 7 };
     const { status, body } = await agent.post('/api/v1/gemstones').send(newGem);
