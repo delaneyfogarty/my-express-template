@@ -45,4 +45,17 @@ describe('/api/v1/gemstones', () => {
     expect(resp2.status).toEqual(200);
     expect(resp2.body).toEqual([user2gem]);
   });
+
+  it('GET /:id should return a single item associated with the authenticated user', async () => {
+    const { agent } = await signUpUser();
+    const { body: gem } = await agent.post('/api/v1/gemstones').send({
+      description: 'citrine',
+      qty: 5,
+    });
+
+    const { status, body } = await agent.get(`/api/v1/gemstones/${gem.id}`);
+
+    expect(status).toEqual(200);
+    expect(body).toEqual(gem);
+  });
 });
