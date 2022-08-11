@@ -59,6 +59,30 @@ describe('/api/v1/gemstones', () => {
     expect(body).toEqual(gem);
   });
 
+  it('UPDATE /:id should 403 for invalid users', async () => {
+    const { agent } = await signUpUser();
+
+    const { body: gem } = await agent.post('/api/v1/gemstones').send({
+      description: 'Moldavite',
+      qty: 18,
+    });
+
+    const { agent: agent2 } = await signUpUser({
+      email: 'user2@email.com',
+      password: 'password',
+    });
+
+    const { status, body } = await agent2
+      .put(`/api/v1/gemstones/${gem.id}`)
+      .send({ bought: true });
+
+    expect(status).toBe(403);
+    expect(body).toEqual({
+      status: 403,
+      message: 'You do not have access to view this page',
+    });
+  });
+
   it('UPDATE /:id should update a gemstone', async () => {
     const { agent } = await signUpUser();
 
@@ -66,7 +90,7 @@ describe('/api/v1/gemstones', () => {
       description: 'Labradorite',
       qty: 3,
     });
-
+    console.log('gem', gem);
     const { status, body: updated } = await agent
       .put(`/api/v1/gemstones/${gem.id}`)
       .send({ is_beautiful: false });
