@@ -58,4 +58,36 @@ describe('/api/v1/gemstones', () => {
     expect(status).toEqual(200);
     expect(body).toEqual(gem);
   });
+
+  it('UPDATE /:id should update a gemstone', async () => {
+    const { agent } = await signUpUser();
+
+    const { body: gem } = await agent.post('/api/v1/gemstones').send({
+      description: 'Labradorite',
+      qty: 3,
+    });
+
+    const { status, body: updated } = await agent
+      .put(`/api/v1/gemstones/${gem.id}`)
+      .send({ is_beautiful: false });
+
+    expect(status).toBe(200);
+    expect(updated).toEqual({ ...gem, is_beautiful: false });
+  });
+
+  it('DELETE /:id should delete items for a valid user', async () => {
+    const { agent } = await signUpUser();
+
+    const { body: gem } = await agent.post('/api/v1/gemstones').send({
+      description: 'Citrine',
+      qty: 5,
+    });
+
+    const { status, body } = await agent.delete(`/api/v1/gemstones/${gem.id}`);
+    expect(status).toBe(200);
+    expect(body).toEqual(gem);
+
+    const { body: gems } = await agent.get('/api/v1/gemstones');
+    expect(gems.length).toBe(0);
+  });
 });
